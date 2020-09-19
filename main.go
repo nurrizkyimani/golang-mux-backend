@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -45,6 +46,13 @@ func main() {
 		Article{ID: "1", Title: "Hello", Desc: "Article Description", Content: "Article Content"},
 		Article{ID: "2", Title: "Hello 2", Desc: "Article Description", Content: "Article Content"},
 		Article{ID: "3", Title: "Hello 2", Desc: "Article Description", Content: "Article Content"},
+	}
+
+	sqlDB, err := sql.Open("postgres")
+
+	if err != nil {
+		fmt.Println(err.Error())
+		panic("failed to connect database")
 	}
 
 	r := mux.NewRouter()
