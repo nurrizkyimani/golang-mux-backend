@@ -1,4 +1,8 @@
-import "gorm.io/gorm"
+package user
+
+import (
+	"gorm.io/gorm"
+)
 
 type Blog struct {
 	gorm.Model
@@ -16,4 +20,9 @@ type BlogCommnent struct {
 	Blog    Blog `gorm:"foreignKey:BlogID"`
 }
 
+func CreateBlog() {
+	db := database.DBConn
+	blog := Blog{}
 
+	db.Create()
+}
