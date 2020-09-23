@@ -1,18 +1,23 @@
 package user
 
 import (
-	"gorm.io/gorm"
+	
+	"github.com/jinzhu/gorm"
 )
 
+
+
+// Blog is a xxx
 type Blog struct {
 	gorm.Model
 	Title       string
-	Blog        string
+	Blog        string  
 	Upvotes     int32
-	BlogComment BlogComment `gorm:"embedded`
+	// BlogComment BlogComment `gorm:"embedded`
 }
 
-type BlogCommnent struct {
+//BlogComment is a xx
+type BlogComment struct {
 	gorm.Model
 	Desc    string
 	upvotes int32
@@ -20,9 +25,4 @@ type BlogCommnent struct {
 	Blog    Blog `gorm:"foreignKey:BlogID"`
 }
 
-func CreateBlog() {
-	db := database.DBConn
-	blog := Blog{}
 
-	db.Create()
-}
