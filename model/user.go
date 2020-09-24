@@ -1,11 +1,8 @@
-package user
+package model
 
-import (
-	
+import (	
 	"github.com/jinzhu/gorm"
 )
-
-
 
 // Blog is a xxx
 type Blog struct {
@@ -13,7 +10,7 @@ type Blog struct {
 	Title       string
 	Blog        string  
 	Upvotes     int32
-	// BlogComment BlogComment `gorm:"embedded`
+	// BlogComment *BlogComment `gorm:"embedded`
 }
 
 //BlogComment is a xx

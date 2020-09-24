@@ -9,6 +9,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/nurrizkyimani/golang-mux-backend/db"
+	"github.com/nurrizkyimani/golang-mux-backend/service"
 
 	// "gorm.io/gorm"s
 
@@ -84,7 +85,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/{key}", HomeHandler)
 	r.HandleFunc("/product/{key}", ProductHandler)
-	// r.HandleFunc("/articles", ArticlesHandler)
+	r.HandleFunc("/product/test/{key}", service.CreateTest)
 	http.Handle("/", r)
 	log.Fatal(http.ListenAndServe("127.0.0.1:8080", nil))
 
