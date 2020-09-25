@@ -107,5 +107,31 @@ func ProductHandler(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(article)
 		}
 	}
+}
+
+//CommentCreated; 
+
+//CreateComment xxx
+func CreateComment() {
+
+}
+
+//ReadCommentById xxx
+func ReadCommentById(){
+
+}
+
+//ReadCommentAll xxx
+func ReadCommentAll(){
+
+}
+
+//UpdateCommentById xxx
+func UpdateCommentById(){
+
+}
+
+//DeleteCommentById xxx
+func DeleteCommentById(){
 
 }
