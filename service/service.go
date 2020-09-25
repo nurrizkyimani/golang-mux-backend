@@ -5,29 +5,44 @@ import (
 	"net/http"
 	"github.com/nurrizkyimani/golang-mux-backend/model"
 	"github.com/gorilla/mux"
+	"fmt"
+		"encoding/json"
+
+	"io/ioutil"
 )
 
 
 //CreateBlog is a test
-func CreateBlog() {
+func CreateBlog(w http.ResponseWriter, r *http.Request) {
 	db := db.DBConn
-	blog := model.Blog {
-		Title: "title 2",
-		Blog: "adfasdfadsf",
-		Upvotes: 2 }
-	db.Create(&blog)
+
+	var b model.Blog
+
+	err := json.NewDecoder(r.Body).Decode(&b)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	res, _ := ioutil.ReadAll(r.Body)
+	db.Create(&res)
 }
 
 //ReadBlog is cool
-func ReadBlog(w http.Response, r *http.Request){
-	vars := mux.Vars(r)
-	db := db.DBConn
+func ReadBlog(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
 
-	db.First(&vars)
+
+	db := db.DBConn
+	var blog model.Blog
+
+	result := db.First(&blog, params["key"]) 
+	json.NewEncoder(w).Encode(result)
 }
 
 //DeleteBlog  the blog
-func DeleteBlog(w http.Response, r *http.Request){
+func DeleteBlog(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	db := db.DBConn
 
@@ -35,12 +50,29 @@ func DeleteBlog(w http.Response, r *http.Request){
 }	
 
 //UpdateBlog the blog
-func UpdateBlog(w http.Response, r *http.Request){
-	// vars := mux.Vars(r)
+func UpdateBlog(w http.ResponseWriter, r *http.Request){
+	params := mux.Vars(r)
+	db := db.DBConn
+
+	var b model.Blog
+
+	db.First(&b, params["key"])
+
+	_, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	b.Title = "new flex"
+	b.Blog = "new desc"
+
+	db.Save(&b)
+
+
 
 }
 
-///CreateTest thisis 
+//CreateTest is xx
 func CreateTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -52,4 +84,28 @@ func CreateTest(w http.ResponseWriter, r *http.Request) {
 		Blog: "adfasdfadsf",
 		Upvotes: 2 }
 	db.Create(&blog)
+}
+
+
+// HomeHandler xxx
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	key := vars["key"]
+
+	fmt.Fprintf(w, "You've requested the book: %s on", key)
+}
+
+
+//ProductHandler is xxx
+func ProductHandler(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	key := vars["key"]
+
+	for _, article := range model.Articles {
+		if article.ID == key {
+			json.NewEncoder(w).Encode(article)
+		}
+	}
+
 }
