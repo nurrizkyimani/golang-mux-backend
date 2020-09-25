@@ -2,7 +2,7 @@ package main
 
 import (
 	// "encoding/json"
-	// "fmt"
+	"fmt"
 	"log"
 	"net/http"
 	// "os"
@@ -27,6 +27,7 @@ func main() {
 	//Initialize datbase
 	db.InitDatabase()
 
+	defer db.DBConn.Close()
 	//start of the router
 	r := mux.NewRouter()
 	r.HandleFunc("/{key}", service.ProductHandler)
@@ -38,5 +39,7 @@ func main() {
 	http.Handle("/", r)
 	log.Fatal(http.ListenAndServe("127.0.0.1:8080", nil))
 
-	defer db.DBConn.Close()
+	fmt.Println("listen to 8080")
+
+	
 }

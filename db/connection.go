@@ -30,8 +30,6 @@ func InitDatabase() {
 		panic("failed to conenct ")
 	}
 
-	
-
 	fmt.Println("Connection opened database")
 
 	DBConn.AutoMigrate(&model.Blog{})
