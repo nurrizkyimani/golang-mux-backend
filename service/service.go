@@ -1,16 +1,16 @@
 package service
 
 import (
-	"github.com/nurrizkyimani/golang-mux-backend/db"
-	"net/http"
-	"github.com/nurrizkyimani/golang-mux-backend/model"
-	"github.com/gorilla/mux"
+	"encoding/json"
 	"fmt"
-		"encoding/json"
-
 	"io/ioutil"
-)
+	"log"
+	"net/http"
 
+	"github.com/gorilla/mux"
+	"github.com/nurrizkyimani/golang-mux-backend/db"
+	"github.com/nurrizkyimani/golang-mux-backend/model"
+)
 
 //CreateBlog is a test
 func CreateBlog(w http.ResponseWriter, r *http.Request) {
@@ -112,12 +112,43 @@ func ProductHandler(w http.ResponseWriter, r *http.Request) {
 //CommentCreated; 
 
 //CreateComment xxx
-func CreateComment() {
+func CreateComment(w http.ResponseWriter, r *http.Request) {
+
+	db := db.DBConn
+
+	_, err := ioutil.ReadAll(r.Body)
+
+
+	if err != nil {
+			log.Println("Error in : %v", err)
+			http.Error(w, "can't read your request", http.StatusBadRequest)
+			return
+	}
+
+	var comment model.BlogComment
+	
+	error := json.NewDecoder(r.Body).Decode(&comment)
+
+	print("This si %v error ", error)
+
+	print(comment)
+
+	db.Create(&comment)
 
 }
 
-//ReadCommentById xxx
-func ReadCommentById(){
+//ReadCommentByID xxx
+func ReadCommentByID(w http.ResponseWriter, r *http.Request, ){
+	w.Header().Set("Content-Type", "application/json")
+
+	db := db.DBConn
+	vars := mux.Vars(r)
+
+	ID := vars["ID"]
+	var comment model.BlogComment
+
+	res := db.First(&comment, ID)
+	json.NewEncoder(w).Encode(res)
 
 }
 
