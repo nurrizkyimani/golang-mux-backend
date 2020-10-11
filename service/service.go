@@ -153,13 +153,24 @@ func ReadCommentByID(w http.ResponseWriter, r *http.Request, ){
 }
 
 //ReadCommentAll xxx
-func ReadCommentAll(){
+func ReadCommentAll(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+
+	db := db.DBConn
+
+	var comment model.BlogComment
+
+	result := db.Find(&comment)
+
+
+	json.NewDecoder(w).Decode(result)
+
 
 }
 
-//UpdateCommentById xxx
-func UpdateCommentById(){
-
+//UpdateCommentByID xxx
+func UpdateCommentByID(){
+	
 }
 
 //DeleteCommentById xxx
