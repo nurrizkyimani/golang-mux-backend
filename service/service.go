@@ -69,7 +69,6 @@ func UpdateBlog(w http.ResponseWriter, r *http.Request){
 	db.Save(&b)
 
 
-
 }
 
 //CreateTest is xx
@@ -129,16 +128,16 @@ func CreateComment(w http.ResponseWriter, r *http.Request) {
 	
 	error := json.NewDecoder(r.Body).Decode(&comment)
 
-	print("This si %v error ", error)
+	fmt.Print("This si %v error ", error)
 
-	print(comment)
+	
 
 	db.Create(&comment)
 
 }
 
 //ReadCommentByID xxx
-func ReadCommentByID(w http.ResponseWriter, r *http.Request, ){
+func ReadCommentByID(w http.ResponseWriter, r *http.Request ){
 	w.Header().Set("Content-Type", "application/json")
 
 	db := db.DBConn
@@ -153,24 +152,24 @@ func ReadCommentByID(w http.ResponseWriter, r *http.Request, ){
 }
 
 //ReadCommentAll xxx
-func ReadCommentAll(w http.ResponseWriter, r *http.Request){
+func ReadCommentAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	db := db.DBConn
 
 	var comment model.BlogComment
 
-	result := db.Find(&comment)
+	result := db.Find(&comment) 
 
-
-	json.NewDecoder(w).Decode(result)
+	
+	json.NewEncoder(w).Encode(result)
 
 
 }
 
 //UpdateCommentByID xxx
 func UpdateCommentByID(){
-	
+
 }
 
 //DeleteCommentById xxx
