@@ -176,3 +176,26 @@ func UpdateCommentByID(){
 func DeleteCommentById(){
 
 }
+
+//SignUp is function fo sign up data and return jwt;
+func SignUp(w http.ResponseWriter, r *http.Request){
+	var user model.User
+	json.NewDecoder(r.Response.Body).Decode(&user)
+
+
+	if user.Email == ""{
+		fmt.Print("error no email")
+		return 
+	}
+
+
+}
+
+//SignIn is function for Sign IN and return jwt;
+func SignIn(){
+
+}
+
+
+//TokenVerify 
+func TokenVerifyMiddleWare()

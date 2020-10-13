@@ -1,6 +1,6 @@
 package model
 
-import (	
+import (
 	"github.com/jinzhu/gorm"
 )
 
@@ -27,6 +27,13 @@ type Article struct {
 	Title   string `json:"Title"`
 	Desc    string `json:"Desc"`
 	Content string `json:"content"`
+}
+
+
+type User struct {
+	ID string `json:"ID"`
+	Email string `json:"email"`
+	Password string `json:"password"`
 }
 
 
