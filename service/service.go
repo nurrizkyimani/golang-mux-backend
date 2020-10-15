@@ -161,26 +161,37 @@ func ReadCommentAll(w http.ResponseWriter, r *http.Request) {
 
 	result := db.Find(&comment) 
 
-	
 	json.NewEncoder(w).Encode(result)
 
 
 }
 
 //UpdateCommentByID xxx
-func UpdateCommentByID(){
+func UpdateCommentByID(w http.ResponseWriter, r *http.Request){
+	db := db.DBConn
+
+	var comment model.BlogComment
+
+	json.NewDecoder(r.Body).Decode(&comment)
+
+	db.Update(&comment)
 
 }
 
 //DeleteCommentById xxx
-func DeleteCommentById(){
+func DeleteCommentById(w http.ResponseWriter, r *http.Request){
+
+	db := db.DBConn
+	var comment model.BlogComment
+	json.NewDecoder(r.Body).Decode(&comment)
+	db.Delete(&comment)
 
 }
 
 //SignUp is function fo sign up data and return jwt;
 func SignUp(w http.ResponseWriter, r *http.Request){
 	var user model.User
-	json.NewDecoder(r.Response.Body).Decode(&user)
+	json.NewDecoder(r.Body).Decode(&user)
 
 
 	if user.Email == ""{
@@ -192,7 +203,12 @@ func SignUp(w http.ResponseWriter, r *http.Request){
 }
 
 //SignIn is function for Sign IN and return jwt;
-func SignIn(){
+func SignIn(w http.ResponseWriter, r *http.Request){
+	var user model.User
+
+	json.NewDecoder(r.Body).Decode(&user)
+
+	
 
 }
 
