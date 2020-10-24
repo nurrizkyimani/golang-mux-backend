@@ -13,6 +13,7 @@ var (
 	DBConn *gorm.DB
 )
 
+
 //InitDatabase xxxxs
 func InitDatabase() {
 	var err error
@@ -20,6 +21,10 @@ func InitDatabase() {
 	if e != nil {
 		fmt.Print(e)
 	}
+
+	testing := "testing"
+
+	fmt.Println(testing)
 
 	dbURL := os.Getenv("db_url")
 	fmt.Println(dbURL)
